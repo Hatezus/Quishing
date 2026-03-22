@@ -1,0 +1,44 @@
+stages:
+   - deploy_infra
+   - deploy
+
+deploy_database:
+   stage: deploy_infra
+   image: docker:cli
+   tags:
+      - docker
+   script:
+      - docker rm -f <Nom_du_site>-database || true
+      - docker run -d --restart unless-stopped --name <Nom_du_site>-database --network <Nom_du_site>-network -e POSTGRES_DB="<DB_Name>" -e POSTGRES_USER="<DB_User>" -e POSTGRES_PASSWORD="<DB_Password>" -v <Path_to_folder>:/var/lib/postgresql/data postgres:17
+   rules:
+      - if: '$CI_COMMIT_BRANCH == "main"'
+        changes:
+           - .gitlab-ci.yml
+
+deploy_static:
+   stage: deploy
+   image: debian:13
+   tags:
+      - docker
+   before_script:
+      - apt-get update
+      - apt-get install -y rsync
+   script:
+      - rsync -av --delete <Path_to_folder>/ <Path_to_folder>/
+   rules:
+      - if: '$CI_COMMIT_BRANCH == "main"'
+
+deploy_backend:
+   stage: deploy
+   image: docker:cli
+   tags:
+      - docker
+   script:
+      - docker build -t <Nom_du_site>/node-app <Path_to_folder>
+      - docker rm -f <Nom_du_site>-node || true
+      - docker run -d --restart unless-stopped --name <Nom_du_site>-node --network <Nom_du_site>-network -p 127.0.0.1:3000:3000 -e NEXT_PUBLIC_END_DATE="<Date>" -e DB_HOST="<DB_Host>" -e DB_PORT="<DB_Port>" -e DB_NAME="<DB_Name>" -e DB_USER="<DB_User>" -e DB_PASSWORD="<DB_Password>" <Nom_du_site>/node-app
+   rules:
+      - if: '$CI_COMMIT_BRANCH == "main"'
+        changes:
+           - <Path_to_folder>/**/*
+           - .gitlab-ci.yml

@@ -1,0 +1,51 @@
+{
+    "welcome": "Benvenuti",
+    "slogan": "NextJS + Shadcn/ui + TailwindCSS + i18n + Better-Auth",
+    "login": {
+        "title": "Accedi",
+        "slogan": "Bentornato!",
+        "email": "Email",
+        "email_placeholder": "Inserisci la tua email",
+        "password": "Password",
+        "password_placeholder": "Inserisci la tua password",
+        "logging_in": "Accesso in corso...",
+        "log_in": "Accedi",
+        "success": "Accesso effettuato con successo.",
+        "log_out": "Esci",
+        "action":"{action} con"
+    },
+    "sign_up": {
+        "title": "Registrati",
+        "slogan": "Benvenuto!",
+        "name": "Nome",
+        "name_placeholder": "Inserisci il tuo nome",
+        "email": "Email",
+        "email_placeholder": "Inserisci la tua email",
+        "password": "Password",
+        "password_placeholder": "Crea una password",
+        "confirm_password": "Conferma Password",
+        "confirm_password_placeholder": "Conferma la password",
+        "signing_up": "Registrazione in corso...",
+        "sign_up": "Registrati",
+        "success":"Registrazione completata"
+    },
+    "home": {
+        "log_in_to_continue": "Accedi per continuare",
+        "log_in": "Accedi",
+        "or": "o",
+        "sign_up": "Registrati"
+    },
+    "profile": {
+        "unauthorized": "Non autorizzato",
+        "title": "Profilo",
+        "welcome_message": "Bentornato {name} !!!"
+    },
+    "login_page": {
+        "home": "Home",
+        "signup_link": "Registrati"
+    },
+    "sign_up_page": {
+        "home": "Home",
+        "login_link": "Accedi"
+    }
+}

@@ -1,0 +1,35 @@
+services:
+    db:
+        image: bitnami/postgresql:latest
+        container_name: <Nom_du_site>-database
+        ports:
+            - '5432:5432'
+        environment:
+            POSTGRESQL_DATABASE: '<DB_Name>'
+            POSTGRESQL_USERNAME: '<DB_User>'
+            POSTGRESQL_PASSWORD: '<DB_Password>'
+            POSTGRESQL_POSTGRES_PASSWORD: '<DB_Root_Password>'
+        healthcheck:
+            test: ['CMD', 'pg_isready', '-U', '<DB_User>', '-d', '<DB_Name>']
+            interval: 5s
+            timeout: 3s
+            retries: 10
+
+    # app:
+    #     build:
+    #         context: <Path_to_folder>
+    #         args:
+    #             DB_ENGINE: postgresql
+    #             PRISMA_URL: 'postgresql://<DB_User>:<DB_Password>@<DB_Host>:<DB_Port>/<DB_Name>'
+    #             BETTER_AUTH_URL: 'http://localhost:3000'
+    #             NEXT_PUBLIC_API_URL: 'http://localhost:3000'
+    #     environment:
+    #         DB_ENGINE: postgresql
+    #         PRISMA_URL: 'postgresql://<DB_User>:<DB_Password>@<DB_Host>:<DB_Port>/<DB_Name>'
+    #         BETTER_AUTH_URL: 'http://localhost:3000'
+    #         NEXT_PUBLIC_API_URL: 'http://localhost:3000'
+    #     ports:
+    #         - '3000:3000'
+    #     depends_on:
+    #         db:
+    #             condition: service_healthy
